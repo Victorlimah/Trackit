@@ -1,15 +1,19 @@
 import Logo from "../../components/Logo";
 import * as S from "./style";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Home() {
+  const navigate = useNavigate();
   const [loginData, setLoginData] = useState({ email: "", password: "" });
+  const URL =
+    "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
 
   return (
     <>
       <Logo />
-      <S.Form>
+      <S.Form onSubmit={login}>
         <input
           required
           type="email"
@@ -38,4 +42,19 @@ export default function Home() {
       </Link>
     </>
   );
+
+  function login(event) {
+    event.preventDefault();
+    axios
+      .post(URL, loginData)
+      .then((response) => {
+        console.log(response);
+        navigate("/habits");
+      })
+      .catch((error) => {
+        console.log(error);
+        loginData.email = "";
+        loginData.password = "";
+      });
+  }
 }
