@@ -12,13 +12,14 @@ export default function Home() {
       <S.Form>
         <input
           required
-          type="text"
+          type="email"
           placeholder="email"
           value={loginData.email}
           onChange={(e) =>
             setLoginData({ ...loginData, email: e.target.value })
           }
         />
+
         <input
           required
           type="password"
