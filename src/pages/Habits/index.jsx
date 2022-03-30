@@ -1,9 +1,17 @@
 import Header from "../../components/Header";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
+import HeaderHabits from "../../components/HeaderHabits";
+import { HabitsContext } from "../../provider/HabitsContext";
 
-export default function Habits({ token }) {
+export default function Habits() {
   const [habits, setHabits] = useState([]);
+  const [creatingHabit, setCreatingHabit] = useState(false);
+  const location = useLocation();
+  const { image, token } = location.state.response;
+  // se eu quiser pegar o token aqui pelo location state também consigo
+  // const { email, id, image, name, token } = location.state.response;
 
   useEffect(() => {
     const config = {
@@ -23,22 +31,20 @@ export default function Habits({ token }) {
       .catch((error) => console.log(error));
   }, []);
 
-  function habitsFactory() {
-    if (habits.length === 0) {
-      return <p>Você não possui nenhum hábito cadastrado</p>;
-    }
-    return habits.map((habits) => {
-      return <h2>{habits.name}</h2>;
-    });
-  }
-
   return (
     <>
-      <Header
-        image={
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png"
-        }
-      />
+      <HabitsContext.Provider value={{ creatingHabit, setCreatingHabit }}>
+        <Header image={image} />
+        <HeaderHabits />
+        {addHabit()}
+      </HabitsContext.Provider>
     </>
   );
+
+  function addHabit() {
+    if (creatingHabit) {
+      return <h1>Criando hábito</h1>;
+    }
+    return <></>;
+  }
 }
