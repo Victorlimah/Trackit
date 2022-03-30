@@ -67,6 +67,10 @@ export default function Register() {
       })
       .catch((error) => {
         console.log(error);
+        userData.email = "";
+        userData.password = "";
+        userData.name = "";
+        userData.image = "";
       });
   }
 }

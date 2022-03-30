@@ -1,10 +1,10 @@
 import Logo from "../../components/Logo";
 import * as S from "./style";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export default function Home() {
+export default function Home({ saveToken }) {
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const URL =
@@ -49,7 +49,8 @@ export default function Home() {
       .post(URL, loginData)
       .then((response) => {
         console.log(response);
-        navigate("/habits");
+        saveToken(response.data.token);
+        navigate("/habits", { state: { response: response.data } });
       })
       .catch((error) => {
         console.log(error);
