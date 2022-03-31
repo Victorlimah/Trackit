@@ -11,6 +11,7 @@ export const Header = styled.header`
   top: 0;
   left: 0;
   padding: 10px 15px;
+  z-index: 5;
 
   h1 {
     font-family: "Playball";

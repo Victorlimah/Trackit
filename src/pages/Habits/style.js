@@ -2,12 +2,12 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   background-color: #f2f2f2;
-  width: 100%;
-  height: 100%;
+  height: 100vh;
 `;
+
 export const CreateHabit = styled.section`
   display: flex;
-  margin: 0 auto;
+  margin: 20px auto;
   flex-direction: column;
   align-items: center;
   width: 90%;
@@ -86,4 +86,13 @@ export const ButtonSave = styled.button`
   text-align: center;
   color: white;
   border-radius: 5px;
+`;
+
+export const Empty = styled.span`
+  display: flex;
+  width: 90%;
+  font-family: "Lexend Deca";
+  font-size: 18px;
+  margin: 50px auto;
+  color: #666666;
 `;

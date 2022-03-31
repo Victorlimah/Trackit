@@ -15,13 +15,13 @@ export default function Habits() {
   // const { email, id, image, name, token } = location.state.response;
 
   const [days, setDays] = useState([
-    { day: "S", name: "Segunda", selected: false },
-    { day: "T", name: "Terça", selected: false },
-    { day: "Q", name: "Quarta", selected: false },
-    { day: "Q", name: "Quinta", selected: false },
-    { day: "S", name: "Sexta", selected: false },
-    { day: "S", name: "Sábado", selected: false },
-    { day: "D", name: "Domingo", selected: false },
+    { day: "S", id: 1, selected: false },
+    { day: "T", id: 2, selected: false },
+    { day: "Q", id: 3, selected: false },
+    { day: "Q", id: 4, selected: false },
+    { day: "S", id: 5, selected: false },
+    { day: "S", id: 6, selected: false },
+    { day: "D", id: 7, selected: false },
   ]);
 
   console.log(days);
@@ -46,13 +46,15 @@ export default function Habits() {
 
   return (
     <>
-      <HabitsContext.Provider value={{ creatingHabit, setCreatingHabit }}>
-        <S.Container>
+      <S.Container>
+        <HabitsContext.Provider value={{ creatingHabit, setCreatingHabit }}>
           <Header image={image} />
+
           <HeaderHabits />
           {addHabit()}
-        </S.Container>
-      </HabitsContext.Provider>
+          {showHabits()}
+        </HabitsContext.Provider>
+      </S.Container>
     </>
   );
 
@@ -89,7 +91,10 @@ export default function Habits() {
               </S.ButtonDays>
 
               <S.ActionsButton>
-                <S.ButtonCancel>Cancelar</S.ButtonCancel>
+                <S.ButtonCancel onClick={() => cancelCreateHabit()}>
+                  Cancelar
+                </S.ButtonCancel>
+
                 <S.ButtonSave>Salvar</S.ButtonSave>
               </S.ActionsButton>
             </form>
@@ -100,8 +105,23 @@ export default function Habits() {
     return <></>;
   }
 
+  function showHabits() {
+    if (habits.length === 0) {
+      return (
+        <S.Empty>
+          Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
+          começar a trackear!
+        </S.Empty>
+      );
+    }
+  }
+
   function selectDay(day) {
     setDays([...days], (day.selected = !day.selected));
     console.log("selectDay " + day.name);
+  }
+
+  function cancelCreateHabit() {
+    setCreatingHabit(false);
   }
 }
