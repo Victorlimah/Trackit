@@ -1,6 +1,6 @@
 import Logo from "../../components/Logo";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as S from "./style";
 import axios from "axios";
 
@@ -14,6 +14,8 @@ export default function Register() {
     name: "",
     image: "",
   });
+
+  const navigate = useNavigate();
   return (
     <>
       <Logo />
@@ -63,14 +65,20 @@ export default function Register() {
     axios
       .post(URL, userData)
       .then((response) => {
-        console.log(response);
+        navigate("/habits", { state: { response: response.data } });
+        clearInputs();
       })
       .catch((error) => {
+        alert("Ocorreu um erro ao realizar o cadastro. Tente novamente!");
         console.log(error);
-        userData.email = "";
-        userData.password = "";
-        userData.name = "";
-        userData.image = "";
+        clearInputs();
       });
+  }
+
+  function clearInputs() {
+    userData.email = "";
+    userData.password = "";
+    userData.name = "";
+    userData.image = "";
   }
 }

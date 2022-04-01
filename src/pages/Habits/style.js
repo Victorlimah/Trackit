@@ -25,11 +25,11 @@ export const CreateHabit = styled.section`
     padding: 7px;
     margin: 20px 0 8px 0;
     font-size: 20px;
-    color: #dbdbdb;
+    color: #666666;
   }
 
   form input::placeholder {
-    color: #d5d5d5;
+    color: #dbdbdb;
   }
 `;
 

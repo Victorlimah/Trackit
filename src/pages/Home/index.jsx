@@ -52,7 +52,7 @@ export default function Home() {
         navigate("/habits", { state: { response: response.data } });
       })
       .catch((error) => {
-        console.log(error);
+        alert("Erro ao fazer o login. Tente novamente!");
         loginData.email = "";
         loginData.password = "";
       });

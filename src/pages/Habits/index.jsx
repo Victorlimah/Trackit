@@ -14,6 +14,7 @@ export default function Habits() {
   // se eu quiser pegar o token aqui pelo location state também consigo
   // const { email, id, image, name, token } = location.state.response;
 
+  const [text, setText] = useState("");
   const [days, setDays] = useState([
     { day: "S", id: 1, selected: false },
     { day: "T", id: 2, selected: false },
@@ -25,6 +26,8 @@ export default function Habits() {
   ]);
 
   console.log(days);
+
+  console.log(showSelected());
 
   useEffect(() => {
     const config = {
@@ -64,7 +67,13 @@ export default function Habits() {
         <>
           <S.CreateHabit>
             <form>
-              <input type="text" placeholder="Nome do hábito: " />
+              <input
+                required
+                type="text"
+                value={text}
+                placeholder="Nome do hábito: "
+                onChange={(e) => setText(e.target.value)}
+              />
               <S.ButtonDays>
                 {days.map((day) => {
                   if (day.selected) {
@@ -118,10 +127,25 @@ export default function Habits() {
 
   function selectDay(day) {
     setDays([...days], (day.selected = !day.selected));
-    console.log("selectDay " + day.name);
+    console.log("selectDay " + day.id);
   }
 
   function cancelCreateHabit() {
     setCreatingHabit(false);
+    setText("");
+    setDays([
+      { day: "S", id: 1, selected: false },
+      { day: "T", id: 2, selected: false },
+      { day: "Q", id: 3, selected: false },
+      { day: "Q", id: 4, selected: false },
+      { day: "S", id: 5, selected: false },
+      { day: "S", id: 6, selected: false },
+      { day: "D", id: 7, selected: false },
+    ]);
+  }
+
+  function showSelected() {
+    let selected = days.filter((day) => day.selected);
+    return selected.map((day) => day.id);
   }
 }
