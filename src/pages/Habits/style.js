@@ -124,7 +124,9 @@ export const TitleHabit = styled.div`
     color: #666666;
   }
 
-  button {
+  img {
+    width: 20px;
+    color: #666666;
   }
 `;
 

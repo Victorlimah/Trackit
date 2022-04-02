@@ -2,6 +2,7 @@ import Header from "../../components/Header";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import Trash from "../../assets/trash.svg";
 import * as S from "./style";
 import HeaderHabits from "../../components/HeaderHabits";
 import { HabitsContext } from "../../provider/HabitsContext";
@@ -116,35 +117,25 @@ export default function Habits() {
     }
     return (
       <>
-        <S.Habit>
-          <S.TitleHabit>
-            <h3>Descrição do habito</h3>
-            <button>L</button>
-          </S.TitleHabit>
-          <S.HabitDay>
-            {days.map((day) => {
-              if (day.selected) {
-                return <S.DaySelect key={day}>{day.day}</S.DaySelect>;
-              }
-              return <S.Day key={day}>{day.day}</S.Day>;
-            })}
-          </S.HabitDay>
-        </S.Habit>
-
-        <S.Habit>
-          <S.TitleHabit>
-            <h3>Descrição do habito</h3>
-            <button>L</button>
-          </S.TitleHabit>
-          <S.HabitDay>
-            {days.map((day) => {
-              if (day.selected) {
-                return <S.DaySelect key={day}>{day.day}</S.DaySelect>;
-              }
-              return <S.Day key={day}>{day.day}</S.Day>;
-            })}
-          </S.HabitDay>
-        </S.Habit>
+        {habits.map((habit) => {
+          let newDays = getDaysHabits(habit.days);
+          return (
+            <S.Habit>
+              <S.TitleHabit>
+                <h3>{habit.name}</h3>
+                <img src={Trash} alt="trash" />
+              </S.TitleHabit>
+              <S.HabitDay>
+                {newDays.map((day) => {
+                  if (day.selected) {
+                    return <S.DaySelect key={day}>{day.day}</S.DaySelect>;
+                  }
+                  return <S.Day key={day}>{day.day}</S.Day>;
+                })}
+              </S.HabitDay>
+            </S.Habit>
+          );
+        })}
       </>
     );
   }
@@ -165,7 +156,7 @@ export default function Habits() {
         headersConfig
       )
       .then((response) => {
-        setHabits([...habits, response.data]);
+        refreshHabits();
         cancelCreateHabit();
       })
       .catch((error) => console.log(error));
@@ -192,5 +183,36 @@ export default function Habits() {
   function getSelected() {
     let selected = days.filter((day) => day.selected);
     return selected.map((day) => day.id);
+  }
+
+  function refreshHabits() {
+    axios
+      .get(URL, headersConfig)
+      .then((response) => {
+        setHabits(response.data);
+      })
+      .catch((error) => console.log(error));
+  }
+
+  function getDaysHabits(arr) {
+    let arrDays = [
+      { day: "S", id: 1, selected: false },
+      { day: "T", id: 2, selected: false },
+      { day: "Q", id: 3, selected: false },
+      { day: "Q", id: 4, selected: false },
+      { day: "S", id: 5, selected: false },
+      { day: "S", id: 6, selected: false },
+      { day: "D", id: 7, selected: false },
+    ];
+
+    arr.forEach((day) => {
+      arrDays.forEach((d) => {
+        if (day === d.id) {
+          d.selected = true;
+        }
+      });
+    });
+
+    return arrDays;
   }
 }
