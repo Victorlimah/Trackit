@@ -27,20 +27,17 @@ export default function Habits() {
 
   console.log(days);
 
-  console.log(showSelected());
-
+  const URL =
+    "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
+  console.log(getSelected());
+  const headersConfig = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
   useEffect(() => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
-    const URL =
-      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
-
     axios
-      .get(URL, config)
+      .get(URL, headersConfig)
       .then((response) => {
         setHabits(response.data);
       })
@@ -104,7 +101,7 @@ export default function Habits() {
                   Cancelar
                 </S.ButtonCancel>
 
-                <S.ButtonSave>Salvar</S.ButtonSave>
+                <S.ButtonSave onClick={() => saveHabit()}>Salvar</S.ButtonSave>
               </S.ActionsButton>
             </form>
           </S.CreateHabit>
@@ -130,8 +127,29 @@ export default function Habits() {
     console.log("selectDay " + day.id);
   }
 
+  function saveHabit() {
+    axios
+      .post(
+        URL,
+        {
+          name: text,
+          days: getSelected(),
+        },
+        headersConfig
+      )
+      .then((response) => {
+        setHabits([...habits, response.data]);
+        cancelCreateHabit();
+      })
+      .catch((error) => console.log(error));
+  }
+
   function cancelCreateHabit() {
     setCreatingHabit(false);
+    clearCreateHabit();
+  }
+
+  function clearCreateHabit() {
     setText("");
     setDays([
       { day: "S", id: 1, selected: false },
@@ -144,7 +162,7 @@ export default function Habits() {
     ]);
   }
 
-  function showSelected() {
+  function getSelected() {
     let selected = days.filter((day) => day.selected);
     return selected.map((day) => day.id);
   }
