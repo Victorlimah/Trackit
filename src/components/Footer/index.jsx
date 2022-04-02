@@ -15,12 +15,6 @@ export default function Footer() {
     </>
   );
 
-  /*
-    trocar conteudo do /home para um componente "Login"
-    trocar conteudo do /register para um componente "Register"
-    (refatorar para sing in e sing up )
-*/
-
   function habits() {
     navigate("/habits");
   }

@@ -1,6 +1,6 @@
 import * as S from "./style";
 import { useContext } from "react";
-import { HabitsContext } from "../../provider/HabitsContext";
+import HabitsContext from "../../provider/HabitsContext";
 
 export default function HeaderHabits() {
   const { creatingHabit, setCreatingHabit } = useContext(HabitsContext);

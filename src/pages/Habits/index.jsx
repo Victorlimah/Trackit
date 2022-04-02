@@ -1,21 +1,17 @@
-import Header from "../../components/Header";
-import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import axios from "axios";
-import Trash from "../../assets/trash.svg";
 import * as S from "./style";
-import HeaderHabits from "../../components/HeaderHabits";
-import { HabitsContext } from "../../provider/HabitsContext";
+import Trash from "../../assets/trash.svg";
+import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import HeaderHabits from "../../components/HeaderHabits";
+import HabitsContext from "../../provider/HabitsContext";
+import { useState, useEffect, useContext } from "react";
 
 export default function Habits() {
+  const { user } = useContext(HabitsContext);
   const [habits, setHabits] = useState([]);
   const [refreshHabits, setRefreshHabits] = useState(false);
   const [creatingHabit, setCreatingHabit] = useState(false);
-  const location = useLocation();
-  const { image, token } = location.state.response;
-  // se eu quiser pegar o token aqui pelo location state também consigo
-  // const { email, id, image, name, token } = location.state.response;
 
   const [text, setText] = useState("");
   const [days, setDays] = useState([
@@ -35,7 +31,7 @@ export default function Habits() {
   console.log(getSelected());
   const headersConfig = {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${user.token}`,
     },
   };
   useEffect(() => {
@@ -51,7 +47,7 @@ export default function Habits() {
     <>
       <S.Container>
         <HabitsContext.Provider value={{ creatingHabit, setCreatingHabit }}>
-          <Header image={image} />
+          <Header image={user.image} />
           <S.MarginTop> </S.MarginTop>
           <HeaderHabits />
           {addHabit()}

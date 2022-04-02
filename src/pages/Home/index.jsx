@@ -1,10 +1,12 @@
 import Logo from "../../components/Logo";
 import * as S from "./style";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import HabitsContext from "../../provider/HabitsContext";
 
 export default function Home() {
+  const { user, setUser } = useContext(HabitsContext);
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const URL =
@@ -49,7 +51,12 @@ export default function Home() {
       .post(URL, loginData)
       .then((response) => {
         console.log(response);
-        navigate("/habits", { state: { response: response.data } });
+        setUser({
+          ...user,
+          token: response.data.token,
+          image: response.data.image,
+        });
+        navigate("/habits");
       })
       .catch((error) => {
         alert("Erro ao fazer o login. Tente novamente!");
