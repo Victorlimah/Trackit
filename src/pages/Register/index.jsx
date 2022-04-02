@@ -65,7 +65,7 @@ export default function Register() {
     axios
       .post(URL, userData)
       .then((response) => {
-        navigate("/habits", { state: { response: response.data } });
+        navigate("/");
         clearInputs();
       })
       .catch((error) => {

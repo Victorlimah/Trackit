@@ -63,47 +63,41 @@ export default function Habits() {
       return (
         <>
           <S.CreateHabit>
-            <form>
-              <input
-                required
-                type="text"
-                value={text}
-                placeholder="Nome do hábito: "
-                onChange={(e) => setText(e.target.value)}
-              />
-              <S.ButtonDays>
-                {days.map((day) => {
-                  if (day.selected) {
-                    return (
-                      <S.DaySelect
-                        onClick={() => selectDay(day)}
-                        type="button"
-                        key={day}
-                      >
-                        {day.day}
-                      </S.DaySelect>
-                    );
-                  }
+            <input
+              required
+              type="text"
+              value={text}
+              placeholder="Nome do hábito: "
+              onChange={(e) => setText(e.target.value)}
+            />
+            <S.ButtonDays>
+              {days.map((day) => {
+                if (day.selected) {
                   return (
-                    <S.Day
+                    <S.DaySelect
                       onClick={() => selectDay(day)}
                       type="button"
                       key={day}
                     >
                       {day.day}
-                    </S.Day>
+                    </S.DaySelect>
                   );
-                })}
-              </S.ButtonDays>
+                }
+                return (
+                  <S.Day onClick={() => selectDay(day)} type="button" key={day}>
+                    {day.day}
+                  </S.Day>
+                );
+              })}
+            </S.ButtonDays>
 
-              <S.ActionsButton>
-                <S.ButtonCancel onClick={() => cancelCreateHabit()}>
-                  Cancelar
-                </S.ButtonCancel>
+            <S.ActionsButton>
+              <S.ButtonCancel onClick={() => cancelCreateHabit()}>
+                Cancelar
+              </S.ButtonCancel>
 
-                <S.ButtonSave onClick={() => saveHabit()}>Salvar</S.ButtonSave>
-              </S.ActionsButton>
-            </form>
+              <S.ButtonSave onClick={() => saveHabit()}>Salvar</S.ButtonSave>
+            </S.ActionsButton>
           </S.CreateHabit>
         </>
       );
@@ -120,6 +114,39 @@ export default function Habits() {
         </S.Empty>
       );
     }
+    return (
+      <>
+        <S.Habit>
+          <S.TitleHabit>
+            <h3>Descrição do habito</h3>
+            <button>L</button>
+          </S.TitleHabit>
+          <S.HabitDay>
+            {days.map((day) => {
+              if (day.selected) {
+                return <S.DaySelect key={day}>{day.day}</S.DaySelect>;
+              }
+              return <S.Day key={day}>{day.day}</S.Day>;
+            })}
+          </S.HabitDay>
+        </S.Habit>
+
+        <S.Habit>
+          <S.TitleHabit>
+            <h3>Descrição do habito</h3>
+            <button>L</button>
+          </S.TitleHabit>
+          <S.HabitDay>
+            {days.map((day) => {
+              if (day.selected) {
+                return <S.DaySelect key={day}>{day.day}</S.DaySelect>;
+              }
+              return <S.Day key={day}>{day.day}</S.Day>;
+            })}
+          </S.HabitDay>
+        </S.Habit>
+      </>
+    );
   }
 
   function selectDay(day) {

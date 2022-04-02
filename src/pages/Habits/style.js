@@ -16,7 +16,7 @@ export const CreateHabit = styled.section`
   border-radius: 5px;
   position: relative;
 
-  form input {
+  input {
     width: 280px;
     background: #ffffff;
     border: 1px solid #d5d5d5;
@@ -28,12 +28,13 @@ export const CreateHabit = styled.section`
     color: #666666;
   }
 
-  form input::placeholder {
+  input::placeholder {
     color: #dbdbdb;
   }
 `;
 
 export const ButtonDays = styled.div`
+  width: 280px;
   margin: 0 auto;
   background: #ffffff;
   display: flex;
@@ -95,4 +96,42 @@ export const Empty = styled.span`
   font-size: 18px;
   margin: 50px auto;
   color: #666666;
+`;
+
+export const Habit = styled.div`
+  display: flex;
+  margin: 20px auto;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 90%;
+  height: 100px;
+  background: white;
+  border-radius: 5px;
+  position: relative;
+`;
+
+export const TitleHabit = styled.div`
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 10px 24px;
+
+  h3 {
+    font-family: "Lexend Deca";
+    font-size: 20px;
+    color: #666666;
+  }
+
+  button {
+  }
+`;
+
+export const HabitDay = styled.div`
+  width: 220px;
+  margin-left: 24px;
+  background: #ffffff;
+  display: flex;
+  justify-content: space-between;
 `;
