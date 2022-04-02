@@ -10,6 +10,7 @@ import Footer from "../../components/Footer";
 
 export default function Habits() {
   const [habits, setHabits] = useState([]);
+  const [refreshHabits, setRefreshHabits] = useState(false);
   const [creatingHabit, setCreatingHabit] = useState(false);
   const location = useLocation();
   const { image, token } = location.state.response;
@@ -44,14 +45,14 @@ export default function Habits() {
         setHabits(response.data);
       })
       .catch((error) => console.log(error));
-  }, []);
+  }, [refreshHabits]);
 
   return (
     <>
       <S.Container>
         <HabitsContext.Provider value={{ creatingHabit, setCreatingHabit }}>
           <Header image={image} />
-
+          <S.MarginTop> </S.MarginTop>
           <HeaderHabits />
           {addHabit()}
           {showHabits()}
@@ -159,7 +160,7 @@ export default function Habits() {
         headersConfig
       )
       .then((response) => {
-        refreshHabits();
+        setRefreshHabits(!refreshHabits);
         cancelCreateHabit();
       })
       .catch((error) => console.log(error));
@@ -193,21 +194,21 @@ export default function Habits() {
       axios
         .delete(`${URL}/${id}`, headersConfig)
         .then((response) => {
-          refreshHabits();
+          setRefreshHabits(!refreshHabits);
           cancelCreateHabit();
         })
         .catch((error) => console.log(error));
     }
   }
 
-  function refreshHabits() {
-    axios
-      .get(URL, headersConfig)
-      .then((response) => {
-        setHabits(response.data);
-      })
-      .catch((error) => console.log(error));
-  }
+  // function refreshHabits() {
+  //   axios
+  //     .get(URL, headersConfig)
+  //     .then((response) => {
+  //       setHabits(response.data);
+  //     })
+  //     .catch((error) => console.log(error));
+  // }
 
   function getDaysHabits(arr) {
     let arrDays = [

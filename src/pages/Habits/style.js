@@ -137,3 +137,8 @@ export const HabitDay = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+
+export const MarginTop = styled.div`
+  height: 110px;
+  background: #f2f2f2;
+`;

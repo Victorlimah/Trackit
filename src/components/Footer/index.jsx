@@ -1,7 +1,7 @@
 import * as S from "./style";
 import { useNavigate } from "react-router-dom";
 
-export default function Footer({ image }) {
+export default function Footer() {
   const navigate = useNavigate();
   return (
     <>
@@ -14,6 +14,12 @@ export default function Footer({ image }) {
       </S.Footer>
     </>
   );
+
+  /*
+    trocar conteudo do /home para um componente "Login"
+    trocar conteudo do /register para um componente "Register"
+    (refatorar para sing in e sing up )
+*/
 
   function habits() {
     navigate("/habits");
