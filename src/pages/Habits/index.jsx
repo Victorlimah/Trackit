@@ -117,13 +117,13 @@ export default function Habits() {
     }
     return (
       <>
-        {habits.map((habit) => {
-          let newDays = getDaysHabits(habit.days);
+        {habits.map(({ id, name, days }) => {
+          let newDays = getDaysHabits(days);
           return (
             <S.Habit>
               <S.TitleHabit>
-                <h3>{habit.name}</h3>
-                <img src={Trash} alt="trash" />
+                <h3>{name}</h3>
+                <img src={Trash} alt="trash" onClick={() => deleteHabit(id)} />
               </S.TitleHabit>
               <S.HabitDay>
                 {newDays.map((day) => {
@@ -183,6 +183,18 @@ export default function Habits() {
   function getSelected() {
     let selected = days.filter((day) => day.selected);
     return selected.map((day) => day.id);
+  }
+
+  function deleteHabit(id) {
+    if (window.confirm("Voce tem certeza que deseja deletar esse hábito?")) {
+      axios
+        .delete(`${URL}/${id}`, headersConfig)
+        .then((response) => {
+          refreshHabits();
+          cancelCreateHabit();
+        })
+        .catch((error) => console.log(error));
+    }
   }
 
   function refreshHabits() {
