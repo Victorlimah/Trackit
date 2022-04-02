@@ -6,6 +6,7 @@ import Trash from "../../assets/trash.svg";
 import * as S from "./style";
 import HeaderHabits from "../../components/HeaderHabits";
 import { HabitsContext } from "../../provider/HabitsContext";
+import Footer from "../../components/Footer";
 
 export default function Habits() {
   const [habits, setHabits] = useState([]);
@@ -54,6 +55,8 @@ export default function Habits() {
           <HeaderHabits />
           {addHabit()}
           {showHabits()}
+
+          <Footer />
         </HabitsContext.Provider>
       </S.Container>
     </>
