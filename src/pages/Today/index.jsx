@@ -1,9 +1,17 @@
-import { Grid } from "react-loader-spinner";
+import Header from "../../components/Header";
+import TodayHabit from "../../components/TodayHabit";
+import HabitsContext from "../../provider/HabitsContext";
+import { useContext } from "react";
+import * as S from "./style";
 
 export default function Today() {
+  const { user } = useContext(HabitsContext);
+  console.log(user);
   return (
-    <div>
-      <Grid color="#00BFFF" height={80} width={80} />
-    </div>
+    <S.Container>
+      <Header image={user.image} />
+      <S.MarginTop> </S.MarginTop>
+      <TodayHabit />
+    </S.Container>
   );
 }

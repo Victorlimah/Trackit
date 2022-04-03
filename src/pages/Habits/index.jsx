@@ -8,12 +8,12 @@ import HabitsContext from "../../provider/HabitsContext";
 import { useState, useEffect, useContext } from "react";
 
 export default function Habits() {
-  const { user } = useContext(HabitsContext);
+  const [text, setText] = useState("");
   const [habits, setHabits] = useState([]);
+  const { user } = useContext(HabitsContext);
   const [refreshHabits, setRefreshHabits] = useState(false);
   const [creatingHabit, setCreatingHabit] = useState(false);
 
-  const [text, setText] = useState("");
   const [days, setDays] = useState([
     { day: "S", id: 1, selected: false },
     { day: "T", id: 2, selected: false },
@@ -24,16 +24,15 @@ export default function Habits() {
     { day: "D", id: 7, selected: false },
   ]);
 
-  console.log(days);
-
   const URL =
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
-  console.log(getSelected());
+
   const headersConfig = {
     headers: {
       Authorization: `Bearer ${user.token}`,
     },
   };
+
   useEffect(() => {
     axios
       .get(URL, headersConfig)
@@ -52,7 +51,6 @@ export default function Habits() {
           <HeaderHabits />
           {addHabit()}
           {showHabits()}
-
           <Footer />
         </HabitsContext.Provider>
       </S.Container>
@@ -78,14 +76,18 @@ export default function Habits() {
                     <S.DaySelect
                       onClick={() => selectDay(day)}
                       type="button"
-                      key={day}
+                      key={`${day.id}selected`}
                     >
                       {day.day}
                     </S.DaySelect>
                   );
                 }
                 return (
-                  <S.Day onClick={() => selectDay(day)} type="button" key={day}>
+                  <S.Day
+                    onClick={() => selectDay(day)}
+                    type="button"
+                    key={`${day.id}unselected`}
+                  >
                     {day.day}
                   </S.Day>
                 );
@@ -128,9 +130,14 @@ export default function Habits() {
               <S.HabitDay>
                 {newDays.map((day) => {
                   if (day.selected) {
-                    return <S.DaySelect key={day}>{day.day}</S.DaySelect>;
+                    return (
+                      <S.DaySelect key={`${day.id}hselect`}>
+                        {day.day}
+                      </S.DaySelect>
+                    );
+                  } else {
+                    return <S.Day key={`${day.id}hunselect`}>{day.day}</S.Day>;
                   }
-                  return <S.Day key={day}>{day.day}</S.Day>;
                 })}
               </S.HabitDay>
             </S.Habit>
@@ -142,7 +149,6 @@ export default function Habits() {
 
   function selectDay(day) {
     setDays([...days], (day.selected = !day.selected));
-    console.log("selectDay " + day.id);
   }
 
   function saveHabit() {
@@ -193,18 +199,9 @@ export default function Habits() {
           setRefreshHabits(!refreshHabits);
           cancelCreateHabit();
         })
-        .catch((error) => console.log(error));
+        .catch((error) => alert("Erro ao deletar hábito"));
     }
   }
-
-  // function refreshHabits() {
-  //   axios
-  //     .get(URL, headersConfig)
-  //     .then((response) => {
-  //       setHabits(response.data);
-  //     })
-  //     .catch((error) => console.log(error));
-  // }
 
   function getDaysHabits(arr) {
     let arrDays = [
