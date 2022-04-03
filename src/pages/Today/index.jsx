@@ -4,11 +4,14 @@ import HabitsContext from "../../provider/HabitsContext";
 import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import * as S from "./style";
+import "dayjs/locale/pt-br";
 
 export default function Today() {
   const { user } = useContext(HabitsContext);
   const [todayHabit, setTodayHabit] = useState([]);
+
   const dayjs = require("dayjs");
+  dayjs.locale("pt-br");
   const URL =
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today";
 
@@ -23,7 +26,7 @@ export default function Today() {
       .get(URL, headersConfig)
       .then((response) => {
         setTodayHabit(response.data);
-        console.log(response.data);
+        console.log(response);
       })
       .catch((error) => alert("Erro ao carregar os hábitos"));
   }, []);

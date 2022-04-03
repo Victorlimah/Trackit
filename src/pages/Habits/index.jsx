@@ -15,13 +15,13 @@ export default function Habits() {
   const [creatingHabit, setCreatingHabit] = useState(false);
 
   const [days, setDays] = useState([
+    { day: "D", id: 0, selected: false },
     { day: "S", id: 1, selected: false },
     { day: "T", id: 2, selected: false },
     { day: "Q", id: 3, selected: false },
     { day: "Q", id: 4, selected: false },
     { day: "S", id: 5, selected: false },
     { day: "S", id: 6, selected: false },
-    { day: "D", id: 7, selected: false },
   ]);
 
   const URL =
@@ -36,9 +36,7 @@ export default function Habits() {
   useEffect(() => {
     axios
       .get(URL, headersConfig)
-      .then((response) => {
-        setHabits(response.data);
-      })
+      .then((response) => setHabits(response.data))
       .catch((error) => console.log(error));
   }, [refreshHabits]);
 
@@ -176,13 +174,13 @@ export default function Habits() {
   function clearCreateHabit() {
     setText("");
     setDays([
+      { day: "D", id: 0, selected: false },
       { day: "S", id: 1, selected: false },
       { day: "T", id: 2, selected: false },
       { day: "Q", id: 3, selected: false },
       { day: "Q", id: 4, selected: false },
       { day: "S", id: 5, selected: false },
       { day: "S", id: 6, selected: false },
-      { day: "D", id: 7, selected: false },
     ]);
   }
 
@@ -205,23 +203,20 @@ export default function Habits() {
 
   function getDaysHabits(arr) {
     let arrDays = [
+      { day: "D", id: 0, selected: false },
       { day: "S", id: 1, selected: false },
       { day: "T", id: 2, selected: false },
       { day: "Q", id: 3, selected: false },
       { day: "Q", id: 4, selected: false },
       { day: "S", id: 5, selected: false },
       { day: "S", id: 6, selected: false },
-      { day: "D", id: 7, selected: false },
     ];
 
     arr.forEach((day) => {
       arrDays.forEach((d) => {
-        if (day === d.id) {
-          d.selected = true;
-        }
+        if (day === d.id) d.selected = true;
       });
     });
-
     return arrDays;
   }
 }
