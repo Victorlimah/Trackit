@@ -1,17 +1,44 @@
 import Header from "../../components/Header";
 import TodayHabit from "../../components/TodayHabit";
 import HabitsContext from "../../provider/HabitsContext";
-import { useContext } from "react";
+import { useState, useContext, useEffect } from "react";
+import axios from "axios";
 import * as S from "./style";
 
 export default function Today() {
   const { user } = useContext(HabitsContext);
-  console.log(user);
+  const [todayHabit, setTodayHabit] = useState([]);
+  const dayjs = require("dayjs");
+  const URL =
+    "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today";
+
+  const headersConfig = {
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+    },
+  };
+
+  useEffect(() => {
+    axios
+      .get(URL, headersConfig)
+      .then((response) => {
+        setTodayHabit(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => alert("Erro ao carregar os hábitos"));
+  }, []);
+
   return (
     <S.Container>
       <Header image={user.image} />
       <S.MarginTop> </S.MarginTop>
-      <TodayHabit />
+      <S.Header>
+        <h2>
+          {dayjs().format("dddd")}, {dayjs().format("DD/MM")}
+        </h2>
+        <h3>Nnehuks dja sjd a</h3>
+      </S.Header>
+      <TodayHabit name="Estudar a api" sequence="5" record="8" />
     </S.Container>
   );
 }
