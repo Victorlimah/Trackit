@@ -3,10 +3,13 @@ import * as S from "./style";
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import HabitsContext from "../../provider/HabitsContext";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function Login() {
-  const { user, setUser } = useContext(HabitsContext);
   const navigate = useNavigate();
+  const { user, setUser } = useContext(HabitsContext);
+  const [textInput, setTextInput] = useState("Entrar");
+  const loadingInput = <ThreeDots width={50} height={50} color="white" />;
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const URL =
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
@@ -34,7 +37,7 @@ export default function Login() {
           }
         />
 
-        <button type="submit">Entrar</button>
+        <button type="submit">{textInput}</button>
       </S.Form>
 
       <Link to="/singup">
@@ -44,6 +47,7 @@ export default function Login() {
   );
 
   function login(event) {
+    setTextInput(loadingInput);
     event.preventDefault();
     axios
       .post(URL, loginData)

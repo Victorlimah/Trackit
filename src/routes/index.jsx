@@ -1,12 +1,11 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Habits from "../pages/Habits";
-import { useState } from "react";
 import Home from "../pages/Home";
-
+import { useState } from "react";
 import Today from "../pages/Today";
 import SignUp from "../pages/SingUp";
-import HabitsContext from "../provider/HabitsContext";
+import Habits from "../pages/Habits";
 import History from "../pages/History";
+import HabitsContext from "../provider/HabitsContext";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 export default function Router() {
   const [user, setUser] = useState({});

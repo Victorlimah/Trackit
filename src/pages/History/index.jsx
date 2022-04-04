@@ -1,8 +1,8 @@
 import * as S from "./style";
+import { useContext } from "react";
 import Header from "../../components/Header";
-import HabitsContext from "../../provider/HabitsContext";
-import { useState, useEffect, useContext } from "react";
 import Footer from "../../components/Footer";
+import HabitsContext from "../../provider/HabitsContext";
 
 export default function History() {
   const { user } = useContext(HabitsContext);

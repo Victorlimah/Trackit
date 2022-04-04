@@ -63,16 +63,14 @@ export default function Today() {
   );
 
   function headerToday() {
+    let percent = (status.habitsAnswered / status.totalHabits) * 100;
     return (
       <>
         <h2>{dayjs().format("dddd - DD/MM").replace("-feira", "")}</h2>
         {todayHabit.length === 0 ? (
           <h3>Você não possui hábitos hoje</h3>
         ) : (
-          <h4>
-            {(status.habitsAnswered / status.totalHabits) * 100}% dos hábitos
-            concluídos
-          </h4>
+          <h4>{percent.toFixed(0)}% dos hábitos concluídos</h4>
         )}
       </>
     );

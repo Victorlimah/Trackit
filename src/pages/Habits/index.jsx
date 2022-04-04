@@ -3,9 +3,9 @@ import * as S from "./style";
 import Trash from "../../assets/trash.svg";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import { useState, useEffect, useContext } from "react";
 import HeaderHabits from "../../components/HeaderHabits";
 import HabitsContext from "../../provider/HabitsContext";
-import { useState, useEffect, useContext } from "react";
 
 export default function Habits() {
   const [text, setText] = useState("");

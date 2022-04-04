@@ -35,6 +35,9 @@ export const Form = styled.form`
     font-size: 21px;
     text-align: center;
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
