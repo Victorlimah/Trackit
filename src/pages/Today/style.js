@@ -70,7 +70,7 @@ export const Infos = styled.div`
 
   .done {
     font-family: "Lexend Deca";
-    font-size: 15px;
+    font-size: 15px; 
     color: #8FC549;
 `;
 

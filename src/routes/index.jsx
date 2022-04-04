@@ -6,6 +6,7 @@ import Home from "../pages/Home";
 import Today from "../pages/Today";
 import SignUp from "../pages/SingUp";
 import HabitsContext from "../provider/HabitsContext";
+import History from "../pages/History";
 
 export default function Router() {
   const [user, setUser] = useState({});
@@ -17,7 +18,7 @@ export default function Router() {
           <Route path="/singup" element={<SignUp />} />
           <Route path="/habits" element={<Habits />} />
           <Route path="/today" element={<Today />} />
-          <Route path="/history" element={<h1>oi</h1>} />
+          <Route path="/history" element={<History />} />
         </Routes>
       </BrowserRouter>
     </HabitsContext.Provider>
