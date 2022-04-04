@@ -13,6 +13,12 @@ export default function Login() {
   const URL =
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
 
+  if (localStorage.getItem("user")) {
+    let data = JSON.parse(localStorage.getItem("user"));
+    setUser(data);
+    navigate("/today");
+  }
+
   return (
     <>
       <S.Form onSubmit={login}>
@@ -56,6 +62,7 @@ export default function Login() {
           token: response.data.token,
           image: response.data.image,
         });
+        localStorage.setItem("user", JSON.stringify(response.data));
         navigate("/today");
       })
       .catch((error) => {
