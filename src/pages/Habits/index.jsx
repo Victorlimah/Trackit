@@ -37,7 +37,7 @@ export default function Habits() {
     axios
       .get(URL, headersConfig)
       .then((response) => setHabits(response.data))
-      .catch((error) => console.log(error));
+      .catch((error) => alert("Erro ao carregar os hábitos"));
   }, [refreshHabits]);
 
   return (
@@ -49,6 +49,7 @@ export default function Habits() {
           <HeaderHabits />
           {addHabit()}
           {showHabits()}
+          {showMargin()}
           <Footer />
         </HabitsContext.Provider>
       </S.Container>
@@ -145,6 +146,10 @@ export default function Habits() {
     );
   }
 
+  function showMargin() {
+    return <S.MarginTop> </S.MarginTop>;
+  }
+
   function selectDay(day) {
     setDays([...days], (day.selected = !day.selected));
   }
@@ -163,7 +168,7 @@ export default function Habits() {
         setRefreshHabits(!refreshHabits);
         cancelCreateHabit();
       })
-      .catch((error) => console.log(error));
+      .catch((error) => alert("Erro ao salvar o hábito"));
   }
 
   function cancelCreateHabit() {

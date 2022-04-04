@@ -56,7 +56,7 @@ export default function Home() {
           token: response.data.token,
           image: response.data.image,
         });
-        navigate("/habits");
+        navigate("/today");
       })
       .catch((error) => {
         alert("Erro ao fazer o login. Tente novamente!");

@@ -1,19 +1,22 @@
+import axios from "axios";
+import "dayjs/locale/pt-br";
+import * as S from "./style";
+import Check from "../../assets/check.png";
 import Header from "../../components/Header";
-import TodayHabit from "../../components/TodayHabit";
+import Footer from "../../components/Footer";
 import HabitsContext from "../../provider/HabitsContext";
 import { useState, useContext, useEffect } from "react";
-import axios from "axios";
-import * as S from "./style";
-import "dayjs/locale/pt-br";
 
 export default function Today() {
   const { user } = useContext(HabitsContext);
+  const [refresh, setRefresh] = useState(false);
   const [todayHabit, setTodayHabit] = useState([]);
 
   const dayjs = require("dayjs");
   dayjs.locale("pt-br");
+
   const URL =
-    "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today";
+    "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/";
 
   const headersConfig = {
     headers: {
@@ -23,25 +26,71 @@ export default function Today() {
 
   useEffect(() => {
     axios
-      .get(URL, headersConfig)
+      .get(`${URL}today`, headersConfig)
       .then((response) => {
         setTodayHabit(response.data);
-        console.log(response);
       })
-      .catch((error) => alert("Erro ao carregar os hábitos"));
-  }, []);
+      .catch(() => alert("Erro ao carregar os hábitos"));
+  }, [refresh]);
 
   return (
     <S.Container>
       <Header image={user.image} />
       <S.MarginTop> </S.MarginTop>
-      <S.Header>
-        <h2>
-          {dayjs().format("dddd")}, {dayjs().format("DD/MM")}
-        </h2>
-        <h3>Nnehuks dja sjd a</h3>
-      </S.Header>
-      <TodayHabit name="Estudar a api" sequence="5" record="8" />
+      <S.Header>{headerToday()}</S.Header>
+      {todayHabit.map((habit) => TodayHabit(habit))}
+      <S.MarginTop> </S.MarginTop>
+      <Footer />
     </S.Container>
   );
+
+  function headerToday() {
+    return (
+      <>
+        <h2>
+          {dayjs().format("dddd")} - {dayjs().format("DD/MM")}
+        </h2>
+        {todayHabit.length === 0 ? (
+          <h3>Você não possui hábitos hoje</h3>
+        ) : (
+          <h4>XX% dos hábitos concluídos</h4>
+        )}
+      </>
+    );
+  }
+
+  function TodayHabit({ id, name, sequence, record, done }) {
+    return (
+      <S.Card>
+        <S.Infos>
+          <h2>{name}</h2>
+          <h3>Sequência atual: {sequence} dias</h3>
+          <h3>Seu recorde: {record} dias</h3>
+        </S.Infos>
+        {!done ? (
+          <S.Uncheck onClick={() => checkHabit(id)}>
+            <img src={Check} alt="check" />
+          </S.Uncheck>
+        ) : (
+          <S.Check onClick={() => unCheckHabit(id)}>
+            <img src={Check} alt="check" />
+          </S.Check>
+        )}
+      </S.Card>
+    );
+  }
+
+  function checkHabit(id) {
+    axios
+      .post(`${URL}${id}/check`, {}, headersConfig)
+      .then(() => setRefresh(!refresh))
+      .catch(() => alert("Erro ao marcar o hábito"));
+  }
+
+  function unCheckHabit(id) {
+    axios
+      .post(`${URL}${id}/uncheck`, {}, headersConfig)
+      .then(() => setRefresh(!refresh))
+      .catch(() => alert("Erro ao desmarcar o hábito"));
+  }
 }
