@@ -37,11 +37,11 @@ export default function Today() {
         setTodayHabit(response.data);
         let length = response.data.length;
         let answered = 0;
+
         for (let i = 0; i < response.data.length; i++) {
-          if (response.data[i].done) {
-            answered++;
-          }
+          if (response.data[i].done) answered++;
         }
+
         setStatus({
           ...status,
           totalHabits: length,
@@ -65,9 +65,7 @@ export default function Today() {
   function headerToday() {
     return (
       <>
-        <h2>
-          {dayjs().format("dddd")} - {dayjs().format("DD/MM")}
-        </h2>
+        <h2>{dayjs().format("dddd - DD/MM").replace("-feira", "")}</h2>
         {todayHabit.length === 0 ? (
           <h3>Você não possui hábitos hoje</h3>
         ) : (
@@ -85,8 +83,25 @@ export default function Today() {
       <S.Card>
         <S.Infos>
           <h2>{name}</h2>
-          <h3>Sequência atual: {currentSequence} dias</h3>
-          <h3>Seu recorde: {highestSequence} dias</h3>
+          <h3>
+            Sequência atual:
+            <span
+              className={done ? "done" : ""}
+            >{` ${currentSequence} dias`}</span>
+          </h3>
+
+          <h3>
+            Seu recorde:
+            <span
+              className={
+                currentSequence === highestSequence && highestSequence !== 0
+                  ? "done"
+                  : ""
+              }
+            >
+              {` ${highestSequence} dias`}
+            </span>
+          </h3>
         </S.Infos>
         {!done ? (
           <S.Uncheck onClick={() => checkHabit(id)}>

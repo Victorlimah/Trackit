@@ -67,6 +67,11 @@ export const Infos = styled.div`
     font-size: 15px;
     color: #666666;
   }
+
+  .done {
+    font-family: "Lexend Deca";
+    font-size: 15px;
+    color: #8FC549;
 `;
 
 export const Uncheck = styled.div`
