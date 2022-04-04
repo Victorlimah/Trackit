@@ -27,7 +27,7 @@ export const Header = styled.header`
 
   div {
     display: flex;
-    align-items: center;
+    align-items: center;    
   }
 `;
 

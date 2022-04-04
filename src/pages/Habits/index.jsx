@@ -94,7 +94,7 @@ export default function Habits() {
             </S.ButtonDays>
 
             <S.ActionsButton>
-              <S.ButtonCancel onClick={() => cancelCreateHabit()}>
+              <S.ButtonCancel onClick={() => setCreatingHabit(false)}>
                 Cancelar
               </S.ButtonCancel>
 
@@ -166,14 +166,10 @@ export default function Habits() {
       )
       .then((response) => {
         setRefreshHabits(!refreshHabits);
-        cancelCreateHabit();
+        clearCreateHabit();
+        setCreatingHabit(false);
       })
       .catch((error) => alert("Erro ao salvar o hábito"));
-  }
-
-  function cancelCreateHabit() {
-    setCreatingHabit(false);
-    clearCreateHabit();
   }
 
   function clearCreateHabit() {
@@ -200,7 +196,8 @@ export default function Habits() {
         .delete(`${URL}/${id}`, headersConfig)
         .then((response) => {
           setRefreshHabits(!refreshHabits);
-          cancelCreateHabit();
+          setCreatingHabit(false);
+          clearCreateHabit();
         })
         .catch((error) => alert("Erro ao deletar hábito"));
     }
