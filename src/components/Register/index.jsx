@@ -1,4 +1,3 @@
-import Logo from "../../components/Logo";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as S from "./style";
@@ -16,9 +15,9 @@ export default function Register() {
   });
 
   const navigate = useNavigate();
+
   return (
     <>
-      <Logo />
       <S.Form onSubmit={register}>
         <input
           required
@@ -52,13 +51,11 @@ export default function Register() {
         />
         <button type="submit">Cadastrar</button>
       </S.Form>
-
       <Link to="/">
         <S.Link>Já tem uma conta? Faça login!</S.Link>
       </Link>
     </>
   );
-
   function register(event) {
     event.preventDefault();
 

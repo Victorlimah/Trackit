@@ -2,8 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Habits from "../pages/Habits";
 import { useState } from "react";
 import Home from "../pages/Home";
-import Register from "../pages/Register";
+
 import Today from "../pages/Today";
+import SignUp from "../pages/SingUp";
 import HabitsContext from "../provider/HabitsContext";
 
 export default function Router() {
@@ -13,7 +14,7 @@ export default function Router() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/singup" element={<SignUp />} />
           <Route path="/habits" element={<Habits />} />
           <Route path="/today" element={<Today />} />
           <Route path="/history" element={<h1>oi</h1>} />
