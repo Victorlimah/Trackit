@@ -8,9 +8,9 @@ import HabitsContext from "../../provider/HabitsContext";
 import { useState, useContext, useEffect } from "react";
 
 export default function Today() {
-  const { user, progress, setProgress } = useContext(HabitsContext);
   const [refresh, setRefresh] = useState(false);
   const [todayHabit, setTodayHabit] = useState([]);
+  const { user, progress, setProgress } = useContext(HabitsContext);
   const [status, setStatus] = useState({
     answeredToday: false,
     isCurrentRecord: false,
@@ -18,6 +18,7 @@ export default function Today() {
     habitsAnswered: 0,
   });
 
+  let percent = (status.habitsAnswered / status.totalHabits) * 100;
   const dayjs = require("dayjs");
   dayjs.locale("pt-br");
 
@@ -63,18 +64,23 @@ export default function Today() {
   );
 
   function headerToday() {
-    let percent = (status.habitsAnswered / status.totalHabits) * 100;
     setProgress(percent);
     return (
       <>
         <h2>{dayjs().format("dddd - DD/MM").replace("-feira", "")}</h2>
-        {todayHabit.length === 0 ? (
-          <h3>Você não possui hábitos hoje</h3>
-        ) : (
-          <h4>{percent.toFixed(0)}% dos hábitos concluídos</h4>
-        )}
+        {subtitle()}
       </>
     );
+  }
+
+  function subtitle() {
+    if (todayHabit.length === 0) {
+      return <h3>Você não possui hábitos hoje</h3>;
+    } else if (status.habitsAnswered === 0) {
+      return <h3>Nenhum hábitos concluído ainda</h3>;
+    } else {
+      return <h4>{percent.toFixed(0)}% dos hábitos concluídos</h4>;
+    }
   }
 
   function TodayHabit({ id, name, currentSequence, highestSequence, done }) {
