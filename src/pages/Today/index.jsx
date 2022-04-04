@@ -11,6 +11,12 @@ export default function Today() {
   const { user } = useContext(HabitsContext);
   const [refresh, setRefresh] = useState(false);
   const [todayHabit, setTodayHabit] = useState([]);
+  const [status, setStatus] = useState({
+    answeredToday: false,
+    isCurrentRecord: false,
+    totalHabits: 0,
+    habitsAnswered: 0,
+  });
 
   const dayjs = require("dayjs");
   dayjs.locale("pt-br");
@@ -29,6 +35,18 @@ export default function Today() {
       .get(`${URL}today`, headersConfig)
       .then((response) => {
         setTodayHabit(response.data);
+        let length = response.data.length;
+        let answered = 0;
+        for (let i = 0; i < response.data.length; i++) {
+          if (response.data[i].done) {
+            answered++;
+          }
+        }
+        setStatus({
+          ...status,
+          totalHabits: length,
+          habitsAnswered: answered,
+        });
       })
       .catch(() => alert("Erro ao carregar os hábitos"));
   }, [refresh]);
@@ -53,19 +71,22 @@ export default function Today() {
         {todayHabit.length === 0 ? (
           <h3>Você não possui hábitos hoje</h3>
         ) : (
-          <h4>XX% dos hábitos concluídos</h4>
+          <h4>
+            {(status.habitsAnswered / status.totalHabits) * 100}% dos hábitos
+            concluídos
+          </h4>
         )}
       </>
     );
   }
 
-  function TodayHabit({ id, name, sequence, record, done }) {
+  function TodayHabit({ id, name, currentSequence, highestSequence, done }) {
     return (
       <S.Card>
         <S.Infos>
           <h2>{name}</h2>
-          <h3>Sequência atual: {sequence} dias</h3>
-          <h3>Seu recorde: {record} dias</h3>
+          <h3>Sequência atual: {currentSequence} dias</h3>
+          <h3>Seu recorde: {highestSequence} dias</h3>
         </S.Infos>
         {!done ? (
           <S.Uncheck onClick={() => checkHabit(id)}>
@@ -83,14 +104,26 @@ export default function Today() {
   function checkHabit(id) {
     axios
       .post(`${URL}${id}/check`, {}, headersConfig)
-      .then(() => setRefresh(!refresh))
+      .then(() => {
+        setRefresh(!refresh);
+        setStatus({
+          ...status,
+          habitsAnswered: status.habitsAnswered + 1,
+        });
+      })
       .catch(() => alert("Erro ao marcar o hábito"));
   }
 
   function unCheckHabit(id) {
     axios
       .post(`${URL}${id}/uncheck`, {}, headersConfig)
-      .then(() => setRefresh(!refresh))
+      .then(() => {
+        setRefresh(!refresh);
+        setStatus({
+          ...status,
+          habitsAnswered: status.habitsAnswered - 1,
+        });
+      })
       .catch(() => alert("Erro ao desmarcar o hábito"));
   }
 }
