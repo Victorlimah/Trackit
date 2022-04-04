@@ -7,6 +7,7 @@ import Loading from "../Loading";
 
 export default function Login() {
   const navigate = useNavigate();
+  const [inputActive, setInputActive] = useState(true);
   const { user, setUser } = useContext(HabitsContext);
   const [textInput, setTextInput] = useState("Entrar");
   const [loginData, setLoginData] = useState({ email: "", password: "" });
@@ -26,6 +27,7 @@ export default function Login() {
           required
           type="email"
           placeholder="email"
+          disabled={!inputActive}
           value={loginData.email}
           onChange={(e) =>
             setLoginData({ ...loginData, email: e.target.value })
@@ -36,6 +38,7 @@ export default function Login() {
           required
           type="password"
           placeholder="senha"
+          disabled={!inputActive}
           value={loginData.password}
           onChange={(e) =>
             setLoginData({ ...loginData, password: e.target.value })
@@ -52,8 +55,10 @@ export default function Login() {
   );
 
   function login(event) {
-    setTextInput(Loading());
     event.preventDefault();
+
+    setTextInput(Loading());
+    setInputActive(false);
     axios
       .post(URL, loginData)
       .then((response) => {
@@ -70,6 +75,7 @@ export default function Login() {
         loginData.email = "";
         loginData.password = "";
         setTextInput("Entrar");
+        setInputActive(true);
       });
   }
 }

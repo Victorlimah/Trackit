@@ -5,6 +5,7 @@ import Loading from "../Loading";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const [inputActive, setInputActive] = useState(true);
   const [textInput, setTextInput] = useState("Cadastrar");
   const URL =
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up";
@@ -25,6 +26,7 @@ export default function Register() {
           required
           type="email"
           placeholder="email"
+          disabled={!inputActive}
           value={userData.email}
           onChange={(e) => setUserData({ ...userData, email: e.target.value })}
         />
@@ -32,6 +34,7 @@ export default function Register() {
           required
           type="password"
           placeholder="senha"
+          disabled={!inputActive}
           value={userData.password}
           onChange={(e) =>
             setUserData({ ...userData, password: e.target.value })
@@ -41,6 +44,7 @@ export default function Register() {
           required
           type="text"
           placeholder="nome"
+          disabled={!inputActive}
           value={userData.name}
           onChange={(e) => setUserData({ ...userData, name: e.target.value })}
         />
@@ -48,6 +52,7 @@ export default function Register() {
           required
           type="text"
           placeholder="imagem"
+          disabled={!inputActive}
           value={userData.image}
           onChange={(e) => setUserData({ ...userData, image: e.target.value })}
         />
@@ -61,6 +66,7 @@ export default function Register() {
   function register(event) {
     setTextInput(Loading());
     event.preventDefault();
+    setInputActive(false);
 
     axios
       .post(URL, userData)
@@ -72,6 +78,7 @@ export default function Register() {
         alert("Ocorreu um erro ao realizar o cadastro. Tente novamente!");
         setTextInput("Cadastrar");
         clearInputs();
+        setInputActive(true);
       });
   }
 

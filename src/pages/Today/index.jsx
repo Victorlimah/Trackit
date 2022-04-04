@@ -10,6 +10,7 @@ import { useState, useContext, useEffect } from "react";
 export default function Today() {
   const [refresh, setRefresh] = useState(false);
   const [todayHabit, setTodayHabit] = useState([]);
+  const [checkActive, setCheckActive] = useState(true);
   const { user, progress, setProgress } = useContext(HabitsContext);
   const [status, setStatus] = useState({
     answeredToday: false,
@@ -109,11 +110,25 @@ export default function Today() {
           </h3>
         </S.Infos>
         {!done ? (
-          <S.Uncheck onClick={() => checkHabit(id)}>
+          <S.Uncheck
+            onClick={() => {
+              if (checkActive) {
+                setCheckActive(false);
+                checkHabit(id);
+              }
+            }}
+          >
             <img src={Check} alt="check" />
           </S.Uncheck>
         ) : (
-          <S.Check onClick={() => unCheckHabit(id)}>
+          <S.Check
+            onClick={() => {
+              if (checkActive) {
+                setCheckActive(false);
+                unCheckHabit(id);
+              }
+            }}
+          >
             <img src={Check} alt="check" />
           </S.Check>
         )}
@@ -130,8 +145,9 @@ export default function Today() {
           ...status,
           habitsAnswered: status.habitsAnswered + 1,
         });
+        setCheckActive(true);
       })
-      .catch(() => alert("Erro ao marcar o hábito"));
+      .catch(() => alert("Erro ao marcar o hábito") && setCheckActive(true));
   }
 
   function unCheckHabit(id) {
@@ -143,7 +159,8 @@ export default function Today() {
           ...status,
           habitsAnswered: status.habitsAnswered - 1,
         });
+        setCheckActive(true);
       })
-      .catch(() => alert("Erro ao desmarcar o hábito"));
+      .catch(() => alert("Erro ao desmarcar o hábito") && setCheckActive(true));
   }
 }
