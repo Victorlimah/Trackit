@@ -24,4 +24,16 @@ export const Header = styled.header`
     height: 51px;
     border-radius: 98.5px;
   }
+
+  div {
+    display: flex;
+    align-items: center;
+  }
+`;
+
+export const Arrow = styled.img`
+  width: 30px !important;
+  height: 30px !important;
+  margin-left: 10px;
+  border-radius: 0 !important;
 `;
