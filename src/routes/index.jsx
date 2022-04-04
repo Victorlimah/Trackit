@@ -9,8 +9,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 export default function Router() {
   const [user, setUser] = useState({});
+  const [progress, setProgress] = useState(0);
   return (
-    <HabitsContext.Provider value={{ user, setUser }}>
+    <HabitsContext.Provider value={{ user, setUser, progress, setProgress }}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />

@@ -1,9 +1,11 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import * as S from "./style";
 import axios from "axios";
+import * as S from "./style";
+import { useState } from "react";
+import Loading from "../Loading";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const [textInput, setTextInput] = useState("Cadastrar");
   const URL =
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up";
 
@@ -49,7 +51,7 @@ export default function Register() {
           value={userData.image}
           onChange={(e) => setUserData({ ...userData, image: e.target.value })}
         />
-        <button type="submit">Cadastrar</button>
+        <button type="submit">{textInput}</button>
       </S.Form>
       <Link to="/">
         <S.Link>Já tem uma conta? Faça login!</S.Link>
@@ -57,6 +59,7 @@ export default function Register() {
     </>
   );
   function register(event) {
+    setTextInput(Loading());
     event.preventDefault();
 
     axios
@@ -67,7 +70,7 @@ export default function Register() {
       })
       .catch((error) => {
         alert("Ocorreu um erro ao realizar o cadastro. Tente novamente!");
-        console.log(error);
+        setTextInput("Cadastrar");
         clearInputs();
       });
   }

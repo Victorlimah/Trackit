@@ -5,7 +5,7 @@ import Footer from "../../components/Footer";
 import HabitsContext from "../../provider/HabitsContext";
 
 export default function History() {
-  const { user } = useContext(HabitsContext);
+  const { user, progress } = useContext(HabitsContext);
   return (
     <>
       <S.Container>
@@ -15,7 +15,7 @@ export default function History() {
           <h2>Histórico</h2>
           <p>Em breve você poderá ver o histórico dos seus hábitos aqui!</p>
         </S.Header>
-        <Footer />
+        <Footer progress={progress} />
       </S.Container>
     </>
   );

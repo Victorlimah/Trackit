@@ -10,7 +10,7 @@ import HabitsContext from "../../provider/HabitsContext";
 export default function Habits() {
   const [text, setText] = useState("");
   const [habits, setHabits] = useState([]);
-  const { user } = useContext(HabitsContext);
+  const { user, progress } = useContext(HabitsContext);
   const [refreshHabits, setRefreshHabits] = useState(false);
   const [creatingHabit, setCreatingHabit] = useState(false);
 
@@ -50,7 +50,7 @@ export default function Habits() {
           {addHabit()}
           {showHabits()}
           {showMargin()}
-          <Footer />
+          <Footer progress={progress} />
         </HabitsContext.Provider>
       </S.Container>
     </>

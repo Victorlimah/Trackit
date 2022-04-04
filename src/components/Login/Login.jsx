@@ -3,13 +3,12 @@ import * as S from "./style";
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import HabitsContext from "../../provider/HabitsContext";
-import { ThreeDots } from "react-loader-spinner";
+import Loading from "../Loading";
 
 export default function Login() {
   const navigate = useNavigate();
   const { user, setUser } = useContext(HabitsContext);
   const [textInput, setTextInput] = useState("Entrar");
-  const loadingInput = <ThreeDots width={50} height={50} color="white" />;
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const URL =
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
@@ -47,7 +46,7 @@ export default function Login() {
   );
 
   function login(event) {
-    setTextInput(loadingInput);
+    setTextInput(Loading());
     event.preventDefault();
     axios
       .post(URL, loginData)
@@ -63,6 +62,7 @@ export default function Login() {
         alert("Erro ao fazer o login. Tente novamente!");
         loginData.email = "";
         loginData.password = "";
+        setTextInput("Entrar");
       });
   }
 }

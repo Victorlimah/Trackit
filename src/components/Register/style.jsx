@@ -25,6 +25,9 @@ export const Form = styled.form`
   }
 
   button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-family: "Lexend Deca";
     border: none;
     width: 250px;

@@ -16,7 +16,18 @@ export const Footer = styled.footer`
     font-weight: 400;
     font-size: 18px;
     color: #52b6ff;
+    cursor: pointer;
   }
+`;
+
+export const Option = styled.p`
+  font-family: "Lexend Deca";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17.976px;
+  line-height: 22px;
+  color: #52b6ff;
+  cursor: pointer;
 `;
 
 export const Today = styled.div`
@@ -36,5 +47,19 @@ export const Today = styled.div`
     font-weight: 400;
     font-size: 18px;
     color: #ffffff;
+  }
+
+  .CircularProgressbar {
+    padding: 4px;
+  }
+  ${Option} {
+    position: absolute;
+    color: #fff;
+  }
+  .CircularProgressbar-path {
+    stroke: #fff;
+  }
+  .CircularProgressbar-trail {
+    stroke: #52b6ff;
   }
 `;

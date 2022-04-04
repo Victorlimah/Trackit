@@ -8,7 +8,7 @@ import HabitsContext from "../../provider/HabitsContext";
 import { useState, useContext, useEffect } from "react";
 
 export default function Today() {
-  const { user } = useContext(HabitsContext);
+  const { user, progress, setProgress } = useContext(HabitsContext);
   const [refresh, setRefresh] = useState(false);
   const [todayHabit, setTodayHabit] = useState([]);
   const [status, setStatus] = useState({
@@ -58,12 +58,13 @@ export default function Today() {
       <S.Header>{headerToday()}</S.Header>
       {todayHabit.map((habit) => TodayHabit(habit))}
       <S.MarginTop> </S.MarginTop>
-      <Footer />
+      <Footer progress={progress} />
     </S.Container>
   );
 
   function headerToday() {
     let percent = (status.habitsAnswered / status.totalHabits) * 100;
+    setProgress(percent);
     return (
       <>
         <h2>{dayjs().format("dddd - DD/MM").replace("-feira", "")}</h2>
